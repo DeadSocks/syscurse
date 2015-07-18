@@ -1,2 +1,2 @@
 # syscurse
-A curses-based bash program I made for common utilities (change volume, toggle trackpad, etc.)
+A curses-based program I made for common utilities (change volume, toggle trackpad, etc.)
