@@ -2,54 +2,54 @@
 
 from os import system
 import curses
+import keyfunc
+import colors
 
 def get_param(prompt_string):
-     screen.clear()
-     screen.border(0)
-     screen.addstr(2, 2, prompt_string)
-     screen.refresh()
-     input = screen.getstr(10, 10, 60)
-     return input
+	screen.clear()
+	screen.border(0)
+	screen.addstr(2, 2, prompt_string)
+	screen.refresh()
+	input = screen.getstr(10, 10, 60)
+	return input
 
-def execute_cmd_verbose(cmd_string):
-     system("clear")
-     a = system(cmd_string)
-     print ""
-     if a == 0:
-          print "Command executed correctly"
-     else:
-          print "Command terminated with error"
-     raw_input("Press enter")
-     print ""
-
-def execute_cmd(cmd_string):
-     system("clear")
-     a=system(cmd_string);
+#Here we store variables for remembering things! Yay! 
 x = 0
-
+global trackpadOff
+trackpadOff =0
+colors.init_colors()
+screen = curses.initscr()
 while x != ord('q'):
-     screen = curses.initscr()
+	screen = curses.initscr()
+	screen.clear()
+	screen.border(0)
+	screen.addstr(2, 2, "Welcome to syscurse... Press q to Exit")
+	screen.addstr(4, 4, ", - to decrease Volume")
+	screen.addstr(5, 4, ". - to increase Volume")
+	screen.addstr(6, 4, "    Current volume level: NaN")
+	screen.addstr(7, 4, "d - Show disk space")
+	screen.addstr(8, 4, "t - Toggle trackpad. Current state: " + keyfunc.str_trackpad(trackpadOff))
 
-     screen.clear()
-     screen.border(0)
-     screen.addstr(2, 2, "Welcome to syscurse...")
-     screen.addstr(4, 4, ", to decrease Volume")
-     screen.addstr(5, 4, ". to increase Volume")
-     screen.addstr(6, 4, "Current volume level: ")
-     screen.addstr(7, 4, "d - Show disk space")
-     screen.addstr(8, 4, "q - Exit")
-     screen.refresh()
+	screen.addstr(4, 40, "f - Open Firefox", curses.color_pair(1))
+	screen.addstr(5, 41, "c - Open Chrome")
+	
 
-     x = screen.getch()
+	screen.refresh()
 
-     if x == ord('.'):
-          curses.endwin()
-          execute_cmd("amixer -D pulse sset Master 5%+")
-     if x == ord(','):
-          curses.endwin()
-          execute_cmd("amixer -D pulse sset Master 5%-")
-     if x == ord('d'):
-          curses.endwin()
-          execute_cmd_verbose("df -h")
-
+	x = screen.getch()
+	
+	if x == ord('.'):
+		keyfunc.inc_vol()
+	if x == ord(','):
+		keyfunc.dec_vol()
+	if x == ord('d'):
+		curses.endwin()
+		keyfunc.execute_cmd_verbose("df -h")
+	if x==ord('t'):
+		trackpadOff = keyfunc.toggle_trackpad(trackpadOff)
+	if x==ord('f'):
+		keyfunc.open_firefox()
+	if x==ord('c'):
+		keyfunc.open_chrome()	
+	
 curses.endwin()
