@@ -24,12 +24,14 @@ while x != ord('q'):
 	screen.clear()
 	screen.border(0)
 	screen.addstr(2, 2, "Welcome to syscurse... Press q to Exit")
-	screen.addstr(4, 4, ", - to decrease Volume")
-	screen.addstr(5, 4, ". - to increase Volume")
+	screen.addstr(4, 4, ", - to decrease Volume", curses.color_pair(2))
+	screen.addstr(5, 4, ". - to increase Volume", curses.color_pair(3))
 	screen.addstr(6, 4, "    Current volume level: NaN")
 	screen.addstr(7, 4, "d - Show disk space")
-	screen.addstr(8, 4, "t - Toggle trackpad. Current state: " + keyfunc.str_trackpad(trackpadOff))
-
+	if(trackpadOff):
+		screen.addstr(8, 4, "t - Toggle trackpad. Current state: " + keyfunc.str_trackpad(trackpadOff), curses.color_pair(3))
+	else:
+		screen.addstr(8, 4, "t - Toggle trackpad. Current state: " + keyfunc.str_trackpad(trackpadOff), curses.color_pair(2))
 	screen.addstr(4, 40, "f - Open Firefox", curses.color_pair(1))
 	screen.addstr(5, 41, "c - Open Chrome")
 	
