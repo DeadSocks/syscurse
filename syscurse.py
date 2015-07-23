@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from os import system
-import curses
 import keyfunc
+import curses
 import colors
 
 def get_param(prompt_string):
