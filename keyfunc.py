@@ -1,4 +1,4 @@
-#!/usr/bin.env python
+#/usr/bin.env python
 from os import system
 import curses
 
@@ -53,7 +53,9 @@ def toggle_trackpad(trackpadOff):
 	else:
 		execute_cmd("synclient TouchpadOff=0")
 		return 0
-
+def disable_VGA():
+	curses.endwin()
+	execute_cmd("xrandr --output VGA-1-2 --off")
 
 def open_firefox():
 	execute_cmd("firefox")

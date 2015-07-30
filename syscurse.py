@@ -23,7 +23,7 @@ while x != ord('q'):
 	screen = curses.initscr()
 	screen.clear()
 	screen.border(0)
-	screen.addstr(2, 2, "Welcome to syscurse... Press q to Exit")
+	screen.addstr(2, 2, "Welcome to syscurse... Press q to Exit", curses.color_pair(5))
 	screen.addstr(4, 4, ", - to decrease Volume", curses.color_pair(2))
 	screen.addstr(5, 4, ". - to increase Volume", curses.color_pair(3))
 	screen.addstr(6, 4, "    Current volume level: NaN")
@@ -34,8 +34,7 @@ while x != ord('q'):
 		screen.addstr(8, 4, "t - Toggle trackpad. Current state: " + keyfunc.str_trackpad(trackpadOff), curses.color_pair(2))
 	screen.addstr(4, 40, "f - Open Firefox", curses.color_pair(1))
 	screen.addstr(5, 41, "c - Open Chrome")
-	
-
+	screen.addstr(9, 5, "s - Turn off screen that isn't real.", curses.color_pair(4))	
 	screen.refresh()
 
 	x = screen.getch()
@@ -53,5 +52,6 @@ while x != ord('q'):
 		keyfunc.open_firefox()
 	if x==ord('c'):
 		keyfunc.open_chrome()	
-	
+	if x==ord('s'):
+		keyfunc.disable_VGA()	
 curses.endwin()
