@@ -61,5 +61,6 @@ def open_firefox():
 	execute_cmd("firefox")
 def open_chrome():
 	execute_cmd("google-chrome")
-
+def hibernate():
+	execute_cmd("sudo pm-hibernate")
 

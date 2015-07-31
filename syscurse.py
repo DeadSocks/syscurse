@@ -17,6 +17,7 @@ def get_param(prompt_string):
 x = 0
 global trackpadOff
 trackpadOff =0
+hibernate = 0
 colors.init_colors()
 screen = curses.initscr()
 while x != ord('q'):
@@ -35,10 +36,17 @@ while x != ord('q'):
 	screen.addstr(4, 40, "f - Open Firefox", curses.color_pair(1))
 	screen.addstr(5, 41, "c - Open Chrome")
 	screen.addstr(9, 5, "s - Turn off screen that isn't real.", curses.color_pair(4))	
-	screen.refresh()
-
-	x = screen.getch()
+	if(hibernate == 0):
+		screen.addstr(10, 8, "h - Hibernate computer.", curses.color_pair(3));
 	
+	if x ==ord('h' or hibernate == 1):
+		hibernate = 1;
+		screen.addstr(10,8, "Do you really want to hiberante? (y/n)", curses.color_pair(1));
+		
+		if(x == 'y'):
+			keyfunc.hibernate()
+		if(x == 'n'):
+			hibernate = 0
 	if x == ord('.'):
 		keyfunc.inc_vol()
 	if x == ord(','):
@@ -54,4 +62,7 @@ while x != ord('q'):
 		keyfunc.open_chrome()	
 	if x==ord('s'):
 		keyfunc.disable_VGA()	
+
+	screen.refresh()
+	x=screen.getch()
 curses.endwin()
